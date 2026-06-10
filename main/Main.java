@@ -1,3 +1,4 @@
+package main;
 import javax.swing.JFrame;
 
 public class Main {
@@ -6,7 +7,7 @@ public class Main {
         JFrame okno = new JFrame();
         okno.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         okno.setResizable(false);
-        okno.setTitle("Java Projekt");
+        okno.setTitle("Java Igra");
 
         GamePanel gamePanel = new GamePanel();
         okno.add(gamePanel);

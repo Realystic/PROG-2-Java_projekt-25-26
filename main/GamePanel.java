@@ -1,26 +1,33 @@
+package main;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+
 import javax.swing.JPanel;
+
+import entity.Player;
 
 
 public class GamePanel extends JPanel implements Runnable {
     // nastavitve okna
-    final int screenWidth = 1440;
-    final int screenHeight = 860;
+    public int screenWidth = 1440;
+    public int screenHeight = 860;
+    final int ORIGINAL_TILE_SIZE = 16;
+    final int SCALE = 3;
+    public int tileSize = ORIGINAL_TILE_SIZE * SCALE;
 
-    KeyHandler KeyH = new KeyHandler(); //poslušalec tipkovnice
+    KeyHandler keyH = new KeyHandler(); //poslušalec tipkovnice
     Thread gameThread; // pomaga z pretakanjem igre
 
     // osnovna lokacija igralca in njegova hitrost
-    Player player = new Player(screenWidth/2, screenHeight/2);
+    Player player = new Player(this, keyH);
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.CYAN);
+        this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true);
-        this.addKeyListener(KeyH);
+        this.addKeyListener(keyH);
         this.setFocusable(true);
     }
 
@@ -42,8 +49,9 @@ public class GamePanel extends JPanel implements Runnable {
             repaint();
 
             try {
-                Thread.sleep(50/3); // ne dela brez try catch metode (ne vem zakaj)
+                Thread.sleep(50/3); // ne dela brez try catch metode (ne vem zakaj) (60 FPS)
             } catch (InterruptedException e) {
+                e.printStackTrace();
             }
             
         }
@@ -51,20 +59,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-
-        if (KeyH.upPressed) {
-            player.UpMove();
-        }
-        if (KeyH.downPressed) {
-            player.DownMove();
-        }
-        if (KeyH.leftPressed) {
-            player.LeftMove();
-        }
-        if (KeyH.rightPressed) {
-            player.RightMove();
-        }
-
+        player.update();
     }
 
     public void paintComponent(Graphics g) {
@@ -72,9 +67,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
-        g2.setColor(Color.RED);
-
-        g2.fillRect(player.x, player.y, 48,48);
+        player.draw(g2);
 
         g2.dispose();
     }
