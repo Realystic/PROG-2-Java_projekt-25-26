@@ -7,19 +7,22 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tile.TileManager;
 
 
 public class GamePanel extends JPanel implements Runnable {
     // nastavitve okna
-    public int screenWidth = 1440;
-    public int screenHeight = 860;
     final int ORIGINAL_TILE_SIZE = 16;
     final int SCALE = 3;
-    public int tileSize = ORIGINAL_TILE_SIZE * SCALE;
+    public final int tileInRow = 20;
+    public final int tileInCol = 34;
+    public final int tileSize = ORIGINAL_TILE_SIZE * SCALE;
+    public final int screenWidth = tileSize * tileInCol;
+    public final int screenHeight = tileSize * tileInRow;
 
     KeyHandler keyH = new KeyHandler(); //poslušalec tipkovnice
     Thread gameThread; // pomaga z pretakanjem igre
-
+    TileManager tileM = new TileManager(this);
     // osnovna lokacija igralca in njegova hitrost
     Player player = new Player(this, keyH);
 
@@ -66,8 +69,10 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D g2 = (Graphics2D)g;
-
+        
+        tileM.draw(g2);
         player.draw(g2);
+
 
         g2.dispose();
     }
