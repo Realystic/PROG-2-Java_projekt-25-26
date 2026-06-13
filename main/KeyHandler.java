@@ -14,7 +14,7 @@ public class KeyHandler implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int code = e.getKeyCode();
-
+        
         switch (code) {
             case KeyEvent.VK_W:
                 upPressed = true;

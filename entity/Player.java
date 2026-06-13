@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -13,11 +14,13 @@ import main.GamePanel;
 public class Player extends Entity {
 
     GamePanel gp;
-    KeyHandler keyH;
     
     public Player(GamePanel gp, KeyHandler keyH) {
         this.gp = gp;
         this.keyH = keyH;
+        this.solidArea = new Rectangle(8,16,32,32);
+        this.collisionOnX = true;
+        this.collisionOnY = true;
 
         setDefaultValues();
         getPlayerImage();
@@ -25,8 +28,8 @@ public class Player extends Entity {
 
     public void setDefaultValues() {
         // na sredini okna začne
-        x = gp.screenWidth/2;
-        y = gp.screenHeight/2;
+        x = gp.screenWidth/2 - (gp.tileSize/2);
+        y = gp.screenHeight/2 - (gp.tileSize/2);
         speed = 4;
         direction = "down";
     }
@@ -48,25 +51,48 @@ public class Player extends Entity {
         }
     }
 
+    int counter = 0;
     public void update() {
         if (keyH.upPressed || keyH.downPressed || keyH.leftPressed || keyH.rightPressed) {
-
+            //allows free movement
             if (keyH.upPressed) {
                 direction = "up";
-                y -= speed;
             }
             if (keyH.downPressed) {
                 direction = "down";
-                y += speed;
             }
             if (keyH.leftPressed) {
                 direction = "left";
-                x -= speed;
             }
             if (keyH.rightPressed) {
                 direction = "right";
-                x += speed;
             }
+            
+            // check collision
+            collisionOnX = false;
+            collisionOnY = false;
+            gp.cChecker.checkTile(this);
+
+            
+            // if collision is false player can move
+            
+            if (!collisionOnX) {
+                if (keyH.leftPressed) {
+                    x -= speed;
+                }
+                if (keyH.rightPressed) {
+                    x += speed;
+                }
+            }
+            if (!collisionOnY) {
+                if (keyH.upPressed) {
+                    y -= speed;
+                }
+                if (keyH.downPressed) {
+                    y += speed;
+                }
+            }
+
 
             spriteCounter++;
             if (spriteCounter > 10) {
@@ -78,7 +104,7 @@ public class Player extends Entity {
 
                 spriteCounter = 0;
             }
-        }
+        }   
     }
 
     public void draw(Graphics2D g2) {

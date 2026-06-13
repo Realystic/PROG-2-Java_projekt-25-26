@@ -14,7 +14,7 @@ public class Main {
 
         okno.pack(); //nastavi velikost okna (in druge nastavitve) glede na kaj potrebuje JPanel, ki je bil dodan prej
 
-        okno.setLocationRelativeTo(null);
+        okno.setLocationRelativeTo(null); 
         okno.setVisible(true);
 
         gamePanel.startGameThread();

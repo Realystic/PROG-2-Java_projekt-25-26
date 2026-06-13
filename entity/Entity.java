@@ -1,6 +1,9 @@
 package entity;
 
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+
+import main.KeyHandler;
 
 public class Entity {
     public int x, y;
@@ -11,4 +14,10 @@ public class Entity {
 
     public int spriteCounter = 0;
     public int spriteNum = 1;
+
+    public Rectangle solidArea;
+    public boolean collisionOnX = false;
+    public boolean collisionOnY = false;
+
+    public KeyHandler keyH;
 }

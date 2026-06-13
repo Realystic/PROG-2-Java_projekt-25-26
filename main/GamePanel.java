@@ -14,8 +14,8 @@ public class GamePanel extends JPanel implements Runnable {
     // nastavitve okna
     final int ORIGINAL_TILE_SIZE = 16;
     final int SCALE = 3;
-    public final int tileInRow = 20;
-    public final int tileInCol = 34;
+    public final int tileInRow = 22;
+    public final int tileInCol = 32;
     public final int tileSize = ORIGINAL_TILE_SIZE * SCALE;
     public final int screenWidth = tileSize * tileInCol;
     public final int screenHeight = tileSize * tileInRow;
@@ -23,8 +23,10 @@ public class GamePanel extends JPanel implements Runnable {
     KeyHandler keyH = new KeyHandler(); //poslušalec tipkovnice
     Thread gameThread; // pomaga z pretakanjem igre
     TileManager tileM = new TileManager(this);
+    public CollisionChecker cChecker = new CollisionChecker(this);
     // osnovna lokacija igralca in njegova hitrost
-    Player player = new Player(this, keyH);
+    public Player player = new Player(this, keyH);
+    
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -72,7 +74,6 @@ public class GamePanel extends JPanel implements Runnable {
         
         tileM.draw(g2);
         player.draw(g2);
-
 
         g2.dispose();
     }
