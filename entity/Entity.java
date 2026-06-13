@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.KeyHandler;
+import main.UtilityTool;
 
 public class Entity {
     public int x, y;
@@ -19,5 +20,7 @@ public class Entity {
     public boolean collisionOnX = false;
     public boolean collisionOnY = false;
 
+    
+    public UtilityTool uTool;
     public KeyHandler keyH;
 }

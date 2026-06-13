@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
 import main.GamePanel;
+import main.UtilityTool;
 
 public class TileManager {
     GamePanel gp;
@@ -21,28 +22,31 @@ public class TileManager {
         mapTileNum = new int[gp.tileInCol][gp.tileInRow];
 
         getTileImage();
-        loadMap();
+        loadMap("./src/maps/map01.txt");
     }
 
     public void getTileImage() {
-        
+            setup(0, "grass", false);
+            setup(1, "wall", true);
+    }
+
+    public void setup(int index, String imageName, boolean collision) {
+        UtilityTool uTool = new UtilityTool();
+
         try {
-            tile[0] = new Tile();
-            tile[0].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("./src/tiles/grass.png"));
-
-            tile[1] = new Tile();
-            tile[1].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("./src/tiles/wall.png"));
-            tile[1].collision = true;
-
+            tile[index] = new Tile();
+            tile[index].image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("./src/tiles/"+ imageName +".png"));
+            tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
+            tile[index].collision = collision;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void loadMap() {
+    public void loadMap(String mapPath) {
         //shranimo mapo kot 2D tabelo
         try {
-            InputStream is = getClass().getClassLoader().getResourceAsStream("./src/maps/map01.txt");
+            InputStream is = getClass().getClassLoader().getResourceAsStream(mapPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             for (int row = 0; row < gp.tileInRow; row++) {

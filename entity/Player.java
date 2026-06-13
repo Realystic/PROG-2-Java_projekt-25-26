@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -74,8 +73,7 @@ public class Player extends Entity {
             gp.cChecker.checkTile(this);
 
             
-            // if collision is false player can move
-            
+            // if collision is false player can move on the specified x or y axis
             if (!collisionOnX) {
                 if (keyH.leftPressed) {
                     x -= speed;
@@ -92,8 +90,8 @@ public class Player extends Entity {
                     y += speed;
                 }
             }
-
-
+            
+            //does the animation
             spriteCounter++;
             if (spriteCounter > 10) {
                 if (spriteNum == 1) {

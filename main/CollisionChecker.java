@@ -25,8 +25,9 @@ public class CollisionChecker {
 
         int tile1, tile2;
         
-        //preveri če se lahko premikaš naprej v določeno smer
-
+        //checks if you can move in a certian direction
+        //2 checks for y axis
+        //up check
         if (entity.keyH.upPressed) {
             entityTopRow = (entityTopY - entity.speed)/gp.tileSize;
             tile1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
@@ -37,7 +38,7 @@ public class CollisionChecker {
             //reset for other checks
             entityTopRow = entityTopY/gp.tileSize;
         }
-
+        //down check
         if (entity.keyH.downPressed) {
             entityBottomRow = (entityBottomY + entity.speed)/gp.tileSize;
             tile1 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
@@ -49,6 +50,8 @@ public class CollisionChecker {
             entityBottomRow = entityBottomY/gp.tileSize;
         }
 
+        //2 checks for x axis
+        //left check
         if (entity.keyH.leftPressed) {
             entityLeftCol = (entityLeftX - entity.speed)/gp.tileSize;
             tile1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
@@ -59,7 +62,7 @@ public class CollisionChecker {
             //reset for other checks
             entityLeftCol = entityLeftX/gp.tileSize;
         }
-
+        //right check
         if (entity.keyH.rightPressed) {
             entityRightCol= (entityRightX + entity.speed)/gp.tileSize;
             tile1 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
@@ -70,53 +73,5 @@ public class CollisionChecker {
             //reset for other checks 
             entityRightCol = entityRightX/gp.tileSize;    
         }
-
-        /*switch (entity.direction) {
-            case "up":
-                // predvideva kam se boš premaknil in pregleda kaj ti je v napoto
-                entityTopRow = (entityTopY - entity.speed)/gp.tileSize;
-                entityBottomRow = (entityBottomY + entity.speed)/gp.tileSize;
-                tile1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
-                tile2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
-                tile3 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
-                tile4 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
-                if (gp.tileM.tile[tile1].collision || gp.tileM.tile[tile2].collision || gp.tileM.tile[tile3].collision || gp.tileM.tile[tile4].collision) {
-                    entity.collisionOn = true;
-                }
-                break;
-            case "down":
-                entityTopRow = (entityTopY - entity.speed)/gp.tileSize;
-                entityBottomRow = (entityBottomY + entity.speed)/gp.tileSize;
-                tile1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
-                tile2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
-                tile3 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
-                tile4 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
-                if (gp.tileM.tile[tile1].collision || gp.tileM.tile[tile2].collision || gp.tileM.tile[tile3].collision || gp.tileM.tile[tile4].collision) {
-                    entity.collisionOn = true;
-                }
-                break;
-            case "left":
-                entityLeftCol = (entityLeftX - entity.speed)/gp.tileSize;
-                entityRightCol= (entityRightX + entity.speed)/gp.tileSize;
-                tile1 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
-                tile2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
-                tile3 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
-                tile4 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
-                if (gp.tileM.tile[tile1].collision || gp.tileM.tile[tile2].collision || gp.tileM.tile[tile3].collision || gp.tileM.tile[tile4].collision) {
-                    entity.collisionOn = true;
-                }
-                break;
-            case "right":
-                entityRightCol= (entityRightX + entity.speed)/gp.tileSize;
-                entityLeftCol = (entityLeftX - entity.speed)/gp.tileSize;
-                tile1 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
-                tile2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
-                tile3 = gp.tileM.mapTileNum[entityLeftCol][entityTopRow];
-                tile4 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
-                if (gp.tileM.tile[tile1].collision || gp.tileM.tile[tile2].collision || gp.tileM.tile[tile3].collision || gp.tileM.tile[tile4].collision) {
-                    entity.collisionOn = true;
-                }
-                break;
-        }*/
     }
 }

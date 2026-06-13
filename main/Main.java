@@ -17,6 +17,7 @@ public class Main {
         okno.setLocationRelativeTo(null); 
         okno.setVisible(true);
 
+        gamePanel.setupGame();
         gamePanel.startGameThread();
     }
 }

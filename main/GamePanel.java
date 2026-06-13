@@ -20,12 +20,17 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenWidth = tileSize * tileInCol;
     public final int screenHeight = tileSize * tileInRow;
 
-    KeyHandler keyH = new KeyHandler(); //poslušalec tipkovnice
-    Thread gameThread; // pomaga z pretakanjem igre
+    KeyHandler keyH = new KeyHandler(this);
+    Thread gameThread; // runs the game
     TileManager tileM = new TileManager(this);
     public CollisionChecker cChecker = new CollisionChecker(this);
-    // osnovna lokacija igralca in njegova hitrost
     public Player player = new Player(this, keyH);
+
+    //Game state
+    public int gameState;
+    public final int titleState = 0;
+    public final int pauseState = 1;
+    public final int playState = 2;
     
 
     public GamePanel() {
@@ -34,6 +39,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
+    }
+
+    public void setupGame() {
+        gameState = playState;
     }
 
     
@@ -64,7 +73,12 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
+        
+        if (gameState == playState) {
         player.update();
+        } else if (gameState == pauseState) {
+            //nothing for now
+        }
     }
 
     public void paintComponent(Graphics g) {
